@@ -22,10 +22,56 @@ Partial Class Form1
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
-        components = New System.ComponentModel.Container()
-        Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(800, 450)
-        Me.Text = "Form1"
+        btnViewSubmission = New Button()
+        btnCreateNewSubmission = New Button()
+        lblTitle = New Label()
+        SuspendLayout()
+        ' 
+        ' btnViewSubmission
+        ' 
+        btnViewSubmission.BackColor = Color.FromArgb(CByte(255), CByte(192), CByte(128))
+        btnViewSubmission.Location = New Point(12, 94)
+        btnViewSubmission.Name = "btnViewSubmission"
+        btnViewSubmission.Size = New Size(392, 43)
+        btnViewSubmission.TabIndex = 0
+        btnViewSubmission.Text = "VIEW SUBMISSIONS (CRTL + V)"
+        btnViewSubmission.UseVisualStyleBackColor = False
+        ' 
+        ' btnCreateNewSubmission
+        ' 
+        btnCreateNewSubmission.BackColor = SystemColors.InactiveCaption
+        btnCreateNewSubmission.Location = New Point(12, 152)
+        btnCreateNewSubmission.Name = "btnCreateNewSubmission"
+        btnCreateNewSubmission.Size = New Size(392, 43)
+        btnCreateNewSubmission.TabIndex = 1
+        btnCreateNewSubmission.Text = "CREATE NEW SUBMISSION (CRTL + N)"
+        btnCreateNewSubmission.UseVisualStyleBackColor = False
+        ' 
+        ' lblTitle
+        ' 
+        lblTitle.AutoSize = True
+        lblTitle.Location = New Point(24, 18)
+        lblTitle.Name = "lblTitle"
+        lblTitle.Size = New Size(371, 20)
+        lblTitle.TabIndex = 2
+        lblTitle.Text = "Musthafa Anwar K P . Slidely Task 2 -Slidely Form App  "
+        ' 
+        ' Form1
+        ' 
+        AutoScaleDimensions = New SizeF(8F, 20F)
+        AutoScaleMode = AutoScaleMode.Font
+        ClientSize = New Size(416, 228)
+        Controls.Add(lblTitle)
+        Controls.Add(btnCreateNewSubmission)
+        Controls.Add(btnViewSubmission)
+        Name = "Form1"
+        Text = "Form1"
+        ResumeLayout(False)
+        PerformLayout()
     End Sub
+
+    Friend WithEvents btnViewSubmission As Button
+    Friend WithEvents btnCreateNewSubmission As Button
+    Friend WithEvents lblTitle As Label
 
 End Class
