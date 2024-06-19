@@ -1,8 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "RnAISeaxhcA=",
+  "dgSpecHash": "ls8sh02kVDA=",
   "success": true,
   "projectFilePath": "E:\\Slidely Intership\\frontend\\Slidely-Form\\Slidely-Form\\Slidely-Form.vbproj",
-  "expectedPackageFiles": [],
+  "expectedPackageFiles": [
+    "C:\\Users\\Anwar\\.nuget\\packages\\newtonsoft.json\\13.0.3\\newtonsoft.json.13.0.3.nupkg.sha512"
+  ],
   "logs": []
 }

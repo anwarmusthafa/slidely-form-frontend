@@ -35,6 +35,7 @@ Partial Class SubmissionForm
         btnStopWatch = New Button()
         ContextMenuStrip1 = New ContextMenuStrip(components)
         txtStopWatch = New TextBox()
+        btnSubmit = New Button()
         SuspendLayout()
         ' 
         ' lblCreateFormTitle
@@ -48,7 +49,7 @@ Partial Class SubmissionForm
         ' 
         ' txtName
         ' 
-        txtName.BackColor = SystemColors.InactiveCaption
+        txtName.BackColor = SystemColors.ButtonHighlight
         txtName.Location = New Point(131, 68)
         txtName.Name = "txtName"
         txtName.Size = New Size(267, 27)
@@ -56,22 +57,24 @@ Partial Class SubmissionForm
         ' 
         ' txtEmail
         ' 
-        txtEmail.BackColor = SystemColors.InactiveCaption
-        txtEmail.Location = New Point(131, 132)
+        txtEmail.BackColor = SystemColors.ButtonHighlight
+        txtEmail.Location = New Point(131, 125)
         txtEmail.Name = "txtEmail"
         txtEmail.Size = New Size(267, 27)
         txtEmail.TabIndex = 2
         ' 
         ' txtPhone
         ' 
-        txtPhone.Location = New Point(131, 201)
+        txtPhone.BackColor = SystemColors.ButtonHighlight
+        txtPhone.Location = New Point(131, 182)
         txtPhone.Name = "txtPhone"
         txtPhone.Size = New Size(267, 27)
         txtPhone.TabIndex = 3
         ' 
         ' txtGithubLink
         ' 
-        txtGithubLink.Location = New Point(131, 257)
+        txtGithubLink.BackColor = SystemColors.ButtonHighlight
+        txtGithubLink.Location = New Point(131, 239)
         txtGithubLink.Name = "txtGithubLink"
         txtGithubLink.Size = New Size(267, 27)
         txtGithubLink.TabIndex = 4
@@ -79,7 +82,7 @@ Partial Class SubmissionForm
         ' lblName
         ' 
         lblName.AutoSize = True
-        lblName.Location = New Point(40, 76)
+        lblName.Location = New Point(31, 75)
         lblName.Name = "lblName"
         lblName.Size = New Size(49, 20)
         lblName.TabIndex = 5
@@ -88,7 +91,7 @@ Partial Class SubmissionForm
         ' Label1
         ' 
         Label1.AutoSize = True
-        Label1.Location = New Point(43, 132)
+        Label1.Location = New Point(31, 125)
         Label1.Name = "Label1"
         Label1.Size = New Size(46, 20)
         Label1.TabIndex = 6
@@ -97,7 +100,7 @@ Partial Class SubmissionForm
         ' lblPhone
         ' 
         lblPhone.AutoSize = True
-        lblPhone.Location = New Point(43, 204)
+        lblPhone.Location = New Point(31, 182)
         lblPhone.Name = "lblPhone"
         lblPhone.Size = New Size(50, 40)
         lblPhone.TabIndex = 7
@@ -106,7 +109,7 @@ Partial Class SubmissionForm
         ' lblGithubLink
         ' 
         lblGithubLink.AutoSize = True
-        lblGithubLink.Location = New Point(31, 257)
+        lblGithubLink.Location = New Point(31, 239)
         lblGithubLink.Name = "lblGithubLink"
         lblGithubLink.Size = New Size(87, 40)
         lblGithubLink.TabIndex = 9
@@ -115,9 +118,9 @@ Partial Class SubmissionForm
         ' btnStopWatch
         ' 
         btnStopWatch.BackColor = Color.Khaki
-        btnStopWatch.Location = New Point(31, 325)
+        btnStopWatch.Location = New Point(31, 306)
         btnStopWatch.Name = "btnStopWatch"
-        btnStopWatch.Size = New Size(218, 37)
+        btnStopWatch.Size = New Size(218, 32)
         btnStopWatch.TabIndex = 10
         btnStopWatch.Text = "Toggle Stop Watch (CTRL + T)"
         btnStopWatch.UseVisualStyleBackColor = False
@@ -131,17 +134,28 @@ Partial Class SubmissionForm
         ' txtStopWatch
         ' 
         txtStopWatch.BackColor = Color.LightGray
-        txtStopWatch.Location = New Point(255, 330)
+        txtStopWatch.Location = New Point(255, 306)
         txtStopWatch.Name = "txtStopWatch"
         txtStopWatch.ReadOnly = True
-        txtStopWatch.Size = New Size(125, 27)
+        txtStopWatch.Size = New Size(143, 27)
         txtStopWatch.TabIndex = 12
+        ' 
+        ' btnSubmit
+        ' 
+        btnSubmit.BackColor = Color.SkyBlue
+        btnSubmit.Location = New Point(38, 368)
+        btnSubmit.Name = "btnSubmit"
+        btnSubmit.Size = New Size(342, 47)
+        btnSubmit.TabIndex = 13
+        btnSubmit.Text = "SUBMIT (CRTL + S)"
+        btnSubmit.UseVisualStyleBackColor = False
         ' 
         ' SubmissionForm
         ' 
         AutoScaleDimensions = New SizeF(8F, 20F)
         AutoScaleMode = AutoScaleMode.Font
         ClientSize = New Size(475, 450)
+        Controls.Add(btnSubmit)
         Controls.Add(txtStopWatch)
         Controls.Add(btnStopWatch)
         Controls.Add(lblGithubLink)
@@ -171,4 +185,5 @@ Partial Class SubmissionForm
     Friend WithEvents btnStopWatch As Button
     Friend WithEvents ContextMenuStrip1 As ContextMenuStrip
     Friend WithEvents txtStopWatch As TextBox
+    Friend WithEvents btnSubmit As Button
 End Class
