@@ -1,7 +1,7 @@
 ﻿Imports System.Net.Http
 Imports System.Text
 Imports System.Threading.Tasks
-Imports Newtonsoft.Json 
+Imports Newtonsoft.Json
 
 Public Class SubmissionForm
 
@@ -11,7 +11,7 @@ Public Class SubmissionForm
             .email = txtEmail.Text,
             .phone = txtPhone.Text,
             .github_link = txtGithubLink.Text,
-            .stopwatch_time = txtStopWatch.Text
+            .stopwatch_time = TextBox1.Text
         }
 
         Await SubmitFormAsync(submission)
@@ -36,6 +36,13 @@ Public Class SubmissionForm
         End Using
     End Function
 
+    Private Sub lblStopWatch_Click(sender As Object, e As EventArgs) Handles Label2.Click
+
+    End Sub
+
+    Private Sub lblCreateFormTitle_Click(sender As Object, e As EventArgs)
+
+    End Sub
 End Class
 
 Public Class Submission

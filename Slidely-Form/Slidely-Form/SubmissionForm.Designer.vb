@@ -32,9 +32,9 @@ Partial Class SubmissionForm
         Label1 = New Label()
         lblPhone = New Label()
         lblGithubLink = New Label()
-        btnStopWatch = New Button()
         ContextMenuStrip1 = New ContextMenuStrip(components)
         txtStopWatch = New TextBox()
+        btnStopWatch = New Button()
         btnSubmit = New Button()
         SuspendLayout()
         ' 
@@ -115,16 +115,6 @@ Partial Class SubmissionForm
         lblGithubLink.TabIndex = 9
         lblGithubLink.Text = "Github Link " & vbCrLf & "For Task 2"
         ' 
-        ' btnStopWatch
-        ' 
-        btnStopWatch.BackColor = Color.Khaki
-        btnStopWatch.Location = New Point(31, 306)
-        btnStopWatch.Name = "btnStopWatch"
-        btnStopWatch.Size = New Size(218, 32)
-        btnStopWatch.TabIndex = 10
-        btnStopWatch.Text = "Toggle Stop Watch (CTRL + T)"
-        btnStopWatch.UseVisualStyleBackColor = False
-        ' 
         ' ContextMenuStrip1
         ' 
         ContextMenuStrip1.ImageScalingSize = New Size(20, 20)
@@ -139,6 +129,16 @@ Partial Class SubmissionForm
         txtStopWatch.ReadOnly = True
         txtStopWatch.Size = New Size(143, 27)
         txtStopWatch.TabIndex = 12
+        ' 
+        ' btnStopWatch
+        ' 
+        btnStopWatch.BackColor = Color.Khaki
+        btnStopWatch.Location = New Point(31, 306)
+        btnStopWatch.Name = "btnStopWatch"
+        btnStopWatch.Size = New Size(218, 32)
+        btnStopWatch.TabIndex = 10
+        btnStopWatch.Text = "Toggle Stop Watch (CTRL + T)"
+        btnStopWatch.UseVisualStyleBackColor = False
         ' 
         ' btnSubmit
         ' 
@@ -182,8 +182,8 @@ Partial Class SubmissionForm
     Friend WithEvents Label1 As Label
     Friend WithEvents lblPhone As Label
     Friend WithEvents lblGithubLink As Label
-    Friend WithEvents btnStopWatch As Button
     Friend WithEvents ContextMenuStrip1 As ContextMenuStrip
     Friend WithEvents txtStopWatch As TextBox
+    Friend WithEvents btnStopWatch As Button
     Friend WithEvents btnSubmit As Button
 End Class
