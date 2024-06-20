@@ -36,8 +36,6 @@ Partial Class ViewSubmission
         txtStopWatch = New TextBox()
         lblStopWatch = New Label()
         btnDelete = New Button()
-        Button1 = New Button()
-        btnEdit = New Button()
         SuspendLayout()
         ' 
         ' lblGithubLink
@@ -169,32 +167,11 @@ Partial Class ViewSubmission
         btnDelete.Text = "Delete"
         btnDelete.UseVisualStyleBackColor = False
         ' 
-        ' Button1
-        ' 
-        Button1.Location = New Point(0, 0)
-        Button1.Name = "Button1"
-        Button1.Size = New Size(94, 29)
-        Button1.TabIndex = 27
-        Button1.Text = "Button1"
-        Button1.UseVisualStyleBackColor = True
-        ' 
-        ' btnEdit
-        ' 
-        btnEdit.BackColor = Color.MediumSpringGreen
-        btnEdit.Location = New Point(241, 441)
-        btnEdit.Name = "btnEdit"
-        btnEdit.Size = New Size(178, 33)
-        btnEdit.TabIndex = 0
-        btnEdit.Text = "EDIT"
-        btnEdit.UseVisualStyleBackColor = False
-        ' 
         ' ViewSubmission
         ' 
         AutoScaleDimensions = New SizeF(8F, 20F)
         AutoScaleMode = AutoScaleMode.Font
         ClientSize = New Size(475, 486)
-        Controls.Add(btnEdit)
-        Controls.Add(Button1)
         Controls.Add(btnDelete)
         Controls.Add(btnNext)
         Controls.Add(btnPrev)
@@ -228,6 +205,4 @@ Partial Class ViewSubmission
     Friend WithEvents txtStopWatch As TextBox
     Friend WithEvents lblStopWatch As Label
     Friend WithEvents btnDelete As Button
-    Friend WithEvents Button1 As Button
-    Friend WithEvents btnEdit As Button
 End Class

@@ -1,7 +1,7 @@
-﻿Imports Newtonsoft.Json
-Imports System.Net.Http
+﻿Imports System.Net.Http
 Imports System.Text
-Imports System.Windows.Forms
+Imports System.Threading.Tasks
+Imports Newtonsoft.Json
 
 Public Class SubmissionForm
     Private stopwatchRunning As Boolean = False
@@ -9,66 +9,33 @@ Public Class SubmissionForm
     Private elapsedTime As TimeSpan
     Private stopwatchTimer As Timer
 
-    Private baseURL As String = "http://localhost:3000"
-    Private submission As Submission
-
     Public Sub New()
         InitializeComponent()
         Me.KeyPreview = True
         Me.Focus()
-        InitializeStopwatch()
-        InitializeForm()
-    End Sub
-
-    Public Sub New(existingSubmission As Submission)
-        InitializeComponent()
-        Me.KeyPreview = True
-        Me.Focus()
-        InitializeStopwatch()
-        InitializeForm(existingSubmission)
-    End Sub
-
-    Private Sub InitializeForm(Optional existingSubmission As Submission = Nothing)
-        submission = If(existingSubmission, New Submission())
-        PopulateFormFields()
-    End Sub
-
-    Private Sub PopulateFormFields()
-        txtName.Text = submission.name
-        txtEmail.Text = submission.email
-        txtPhone.Text = submission.phone
-        txtGithubLink.Text = submission.github_link
-        txtStopWatch.Text = submission.stopwatch_time
-    End Sub
-
-    Private Sub InitializeStopwatch()
         stopwatchTimer = New Timer()
         AddHandler stopwatchTimer.Tick, AddressOf UpdateStopwatch
         stopwatchTimer.Interval = 1000
     End Sub
 
     Private Async Sub btnSubmit_Click(sender As Object, e As EventArgs) Handles btnSubmit.Click
-        Await SubmitForm()
+        Await SubmitFormAsync()
     End Sub
 
-    Private Async Function SubmitForm() As Task
-        Try
-            submission.name = txtName.Text
-            submission.email = txtEmail.Text
-            submission.phone = txtPhone.Text
-            submission.github_link = txtGithubLink.Text
-            submission.stopwatch_time = txtStopWatch.Text
+    Private Async Function SubmitFormAsync() As Task
+        Dim submission As New Submission With {
+            .name = txtName.Text,
+            .email = txtEmail.Text,
+            .phone = txtPhone.Text,
+            .github_link = txtGithubLink.Text,
+            .stopwatch_time = txtStopWatch.Text
+        }
 
-            Using client As New HttpClient()
+        Using client As New HttpClient()
+            Try
                 Dim jsonContent As String = JsonConvert.SerializeObject(submission)
-                Dim content As New StringContent(jsonContent, Encoding.UTF8, "application/json")
-
-                Dim response As HttpResponseMessage
-                If String.IsNullOrEmpty(submission.id) Then
-                    response = Await client.PostAsync($"{baseURL}/submit", content)
-                Else
-                    response = Await client.PutAsync($"{baseURL}/update/{submission.id}", content)
-                End If
+                Dim content As StringContent = New StringContent(jsonContent, Encoding.UTF8, "application/json")
+                Dim response As HttpResponseMessage = Await client.PostAsync("http://localhost:3000/submit", content)
 
                 If response.IsSuccessStatusCode Then
                     MessageBox.Show("Submission Successful!")
@@ -76,15 +43,19 @@ Public Class SubmissionForm
                 Else
                     MessageBox.Show("Submission Failed!")
                 End If
-            End Using
-        Catch ex As Exception
-            MessageBox.Show("An error occurred while submitting the form: " & ex.Message)
-        End Try
+            Catch ex As Exception
+                MessageBox.Show("Error submitting form: " & ex.Message)
+            End Try
+        End Using
     End Function
 
     Private Sub ClearFormFields()
-        submission = New Submission()
-        PopulateFormFields()
+        txtName.Text = ""
+        txtEmail.Text = ""
+        txtPhone.Text = ""
+        txtGithubLink.Text = ""
+        txtStopWatch.Text = "00:00:00"
+        ResetStopwatch()
     End Sub
 
     Private Sub ResetStopwatch()
@@ -96,31 +67,28 @@ Public Class SubmissionForm
 
     Private Sub SubmissionForm_KeyDown(sender As Object, e As KeyEventArgs) Handles MyBase.KeyDown
         If e.Control AndAlso e.KeyCode = Keys.S Then
-            e.SuppressKeyPress = True
             btnSubmit.PerformClick()
+            e.SuppressKeyPress = True
         ElseIf e.Control AndAlso e.KeyCode = Keys.T Then
             btnStopWatchToggle.PerformClick()
+
         End If
     End Sub
 
     Private Sub btnStopWatchToggle_Click(sender As Object, e As EventArgs) Handles btnStopWatchToggle.Click
         If Not stopwatchRunning Then
-            StartStopwatch()
+            stopwatchRunning = True
+            If elapsedTime = TimeSpan.Zero Then
+                stopwatchStartTime = DateTime.Now
+            Else
+                stopwatchStartTime = DateTime.Now - elapsedTime
+            End If
+            stopwatchTimer.Start()
         Else
-            StopStopwatch()
+            stopwatchRunning = False
+            elapsedTime = DateTime.Now - stopwatchStartTime
+            stopwatchTimer.Stop()
         End If
-    End Sub
-
-    Private Sub StartStopwatch()
-        stopwatchRunning = True
-        stopwatchStartTime = DateTime.Now - elapsedTime
-        stopwatchTimer.Start()
-    End Sub
-
-    Private Sub StopStopwatch()
-        stopwatchRunning = False
-        elapsedTime = DateTime.Now - stopwatchStartTime
-        stopwatchTimer.Stop()
     End Sub
 
     Private Sub UpdateStopwatch(sender As Object, e As EventArgs)
@@ -132,7 +100,6 @@ Public Class SubmissionForm
 End Class
 
 Public Class Submission
-    Public Property id As String
     Public Property name As String
     Public Property email As String
     Public Property phone As String
