@@ -18,6 +18,7 @@ Public Class SubmissionForm
         stopwatchTimer = New Timer()
         AddHandler stopwatchTimer.Tick, AddressOf UpdateStopwatch
         stopwatchTimer.Interval = 1000
+        txtStopWatch.Text = "00:00:00"
 
         If submission IsNot Nothing Then
             isEditMode = True
@@ -31,12 +32,44 @@ Public Class SubmissionForm
     End Sub
 
     Private Async Sub btnSubmit_Click(sender As Object, e As EventArgs) Handles btnSubmit.Click
-        If isEditMode Then
-            Await EditSubmissionAsync()
-        Else
-            Await SubmitFormAsync()
+        If ValidateForm() Then
+            If isEditMode Then
+                Await EditSubmissionAsync()
+            Else
+                Await SubmitFormAsync()
+            End If
         End If
     End Sub
+
+    Private Function ValidateForm() As Boolean
+        Dim isValid As Boolean = True
+        Dim errorMessage As String = ""
+
+        ' Check if name is empty
+        If String.IsNullOrWhiteSpace(txtName.Text) Then
+            errorMessage &= "- Name is required." & vbCrLf
+            isValid = False
+        End If
+
+        ' Check if email is empty or invalid format (basic format validation)
+        If String.IsNullOrWhiteSpace(txtEmail.Text) OrElse Not txtEmail.Text.Contains("@") OrElse Not txtEmail.Text.Contains(".") Then
+            errorMessage &= "- Valid email address is required." & vbCrLf
+            isValid = False
+        End If
+
+        ' Check if phone number is empty or not numeric (basic numeric validation)
+        If String.IsNullOrWhiteSpace(txtPhone.Text) OrElse Not IsNumeric(txtPhone.Text) Then
+            errorMessage &= "- Valid phone number is required." & vbCrLf
+            isValid = False
+        End If
+
+        ' Display error message if validation fails
+        If Not isValid Then
+            MessageBox.Show("Validation Error:" & vbCrLf & errorMessage, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+        End If
+
+        Return isValid
+    End Function
 
     Private Async Function SubmitFormAsync() As Task
         Dim submission As New Submission With {

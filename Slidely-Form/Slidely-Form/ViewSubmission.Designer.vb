@@ -127,7 +127,7 @@ Partial Class ViewSubmission
         btnNext.Name = "btnNext"
         btnNext.Size = New Size(178, 33)
         btnNext.TabIndex = 25
-        btnNext.Text = "NEXT (CTRL + N)"
+        btnNext.Text = "NEXT (CTRL+N)"
         btnNext.UseVisualStyleBackColor = False
         ' 
         ' btnPrev
@@ -137,7 +137,7 @@ Partial Class ViewSubmission
         btnPrev.Name = "btnPrev"
         btnPrev.Size = New Size(178, 33)
         btnPrev.TabIndex = 24
-        btnPrev.Text = "PREVIOUS (CTRL + P)"
+        btnPrev.Text = "PREVIOUS (CTRL+P)"
         btnPrev.UseVisualStyleBackColor = False
         ' 
         ' txtStopWatch
@@ -165,7 +165,7 @@ Partial Class ViewSubmission
         btnDelete.Name = "btnDelete"
         btnDelete.Size = New Size(178, 33)
         btnDelete.TabIndex = 26
-        btnDelete.Text = "Delete"
+        btnDelete.Text = "DELETE (CTRL+D"
         btnDelete.UseVisualStyleBackColor = False
         ' 
         ' btnEdit
@@ -175,7 +175,7 @@ Partial Class ViewSubmission
         btnEdit.Name = "btnEdit"
         btnEdit.Size = New Size(178, 33)
         btnEdit.TabIndex = 27
-        btnEdit.Text = "EDIT"
+        btnEdit.Text = "EDIT (CTRL+E)"
         btnEdit.UseVisualStyleBackColor = False
         ' 
         ' ViewSubmission

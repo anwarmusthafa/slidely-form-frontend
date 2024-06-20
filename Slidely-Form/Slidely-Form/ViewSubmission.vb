@@ -77,6 +77,12 @@ Public Class ViewSubmission
         ElseIf e.Control AndAlso e.KeyCode = Keys.N Then
             btnNext.PerformClick()
             e.SuppressKeyPress = True
+        ElseIf e.Control AndAlso e.KeyCode = Keys.D Then
+            btnDelete.PerformClick()
+            e.SuppressKeyPress = True
+        ElseIf e.Control AndAlso e.KeyCode = Keys.E Then
+            btnEdit.PerformClick()
+            e.SuppressKeyPress = True
         End If
     End Sub
 
