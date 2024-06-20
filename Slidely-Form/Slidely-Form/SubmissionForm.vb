@@ -28,6 +28,8 @@ Public Class SubmissionForm
             txtPhone.Text = submission.phone
             txtGithubLink.Text = submission.github_link
             txtStopWatch.Text = submission.stopwatch_time
+            lblCreateFormTitle.Text = "Musthafa Anwar K P, Slidely Task - Edit Submissions"
+            btnSubmit.Text = "UPDATE (CRTL+S)"
         End If
     End Sub
 
