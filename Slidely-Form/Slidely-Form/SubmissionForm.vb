@@ -1,29 +1,47 @@
-﻿Imports System.Net.Http
+﻿Imports Newtonsoft.Json
+Imports System.Net.Http
 Imports System.Text
-Imports System.Threading.Tasks
-Imports Newtonsoft.Json
 
 Public Class SubmissionForm
-    Private stopwatchRunning As Boolean = False
-    Private stopwatchStartTime As DateTime
-    Private elapsedTime As TimeSpan
-    Private stopwatchTimer As Timer
+    Private submission As GetSubmission
+    Private baseURL As String = "http://localhost:3000"
 
     Public Sub New()
         InitializeComponent()
-        Me.KeyPreview = True
-        Me.Focus()
-        stopwatchTimer = New Timer()
-        AddHandler stopwatchTimer.Tick, AddressOf UpdateStopwatch
-        stopwatchTimer.Interval = 1000
+        ' Initialize as new submission
+        Me.Text = "Create Submission"
+        btnSubmit.Text = "Create"
+    End Sub
+
+    Public Sub New(existingSubmission As GetSubmission)
+        InitializeComponent()
+        ' Initialize for editing existing submission
+        Me.Text = "Edit Submission"
+        btnSubmit.Text = "Update"
+        submission = existingSubmission
+        PopulateFormFields()
+    End Sub
+
+    Private Sub PopulateFormFields()
+        If submission IsNot Nothing Then
+            txtName.Text = submission.name
+            txtEmail.Text = submission.email
+            txtPhone.Text = submission.phone
+            txtGithubLink.Text = submission.github_link
+            txtStopWatch.Text = submission.stopwatch_time
+        End If
     End Sub
 
     Private Async Sub btnSubmit_Click(sender As Object, e As EventArgs) Handles btnSubmit.Click
-        Await SubmitFormAsync()
+        If submission Is Nothing Then
+            Await CreateNewSubmissionAsync()
+        Else
+            Await UpdateSubmissionAsync()
+        End If
     End Sub
 
-    Private Async Function SubmitFormAsync() As Task
-        Dim submission As New Submission With {
+    Private Async Function CreateNewSubmissionAsync() As Task
+        Dim newSubmission As New GetSubmission With {
             .name = txtName.Text,
             .email = txtEmail.Text,
             .phone = txtPhone.Text,
@@ -33,71 +51,50 @@ Public Class SubmissionForm
 
         Using client As New HttpClient()
             Try
-                Dim jsonContent As String = JsonConvert.SerializeObject(submission)
-                Dim content As StringContent = New StringContent(jsonContent, Encoding.UTF8, "application/json")
-                Dim response As HttpResponseMessage = Await client.PostAsync("http://localhost:3000/submit", content)
+                Dim jsonContent As String = JsonConvert.SerializeObject(newSubmission)
+                Dim content As New StringContent(jsonContent, Encoding.UTF8, "application/json")
+                Dim response As HttpResponseMessage = Await client.PostAsync($"{baseURL}/submit", content)
 
                 If response.IsSuccessStatusCode Then
-                    MessageBox.Show("Submission Successful!")
-                    ClearFormFields()
+                    MessageBox.Show("Submission created successfully!")
+                    Me.Close()
                 Else
-                    MessageBox.Show("Submission Failed!")
+                    MessageBox.Show("Failed to create submission.")
                 End If
             Catch ex As Exception
-                MessageBox.Show("Error submitting form: " & ex.Message)
+                MessageBox.Show("An error occurred while creating submission: " & ex.Message)
             End Try
         End Using
     End Function
 
-    Private Sub ClearFormFields()
-        txtName.Text = ""
-        txtEmail.Text = ""
-        txtPhone.Text = ""
-        txtGithubLink.Text = ""
-        txtStopWatch.Text = "00:00:00"
-        ResetStopwatch()
-    End Sub
+    Private Async Function UpdateSubmissionAsync() As Task
+        If submission IsNot Nothing Then
+            submission.name = txtName.Text
+            submission.email = txtEmail.Text
+            submission.phone = txtPhone.Text
+            submission.github_link = txtGithubLink.Text
+            submission.stopwatch_time = txtStopWatch.Text
 
-    Private Sub ResetStopwatch()
-        stopwatchRunning = False
-        elapsedTime = TimeSpan.Zero
-        stopwatchTimer.Stop()
-        txtStopWatch.Text = "00:00:00"
-    End Sub
+            Using client As New HttpClient()
+                Try
+                    Dim jsonContent As String = JsonConvert.SerializeObject(submission)
+                    Dim content As New StringContent(jsonContent, Encoding.UTF8, "application/json")
+                    Dim response As HttpResponseMessage = Await client.PutAsync($"{baseURL}/update/{submission.id}", content)
 
-    Private Sub SubmissionForm_KeyDown(sender As Object, e As KeyEventArgs) Handles MyBase.KeyDown
-        If e.Control AndAlso e.KeyCode = Keys.S Then
-            btnSubmit.PerformClick()
-            e.SuppressKeyPress = True
-        ElseIf e.Control AndAlso e.KeyCode = Keys.T Then
-            btnStopWatchToggle.PerformClick()
-
+                    If response.IsSuccessStatusCode Then
+                        MessageBox.Show("Submission updated successfully!")
+                        Me.Close()
+                    Else
+                        MessageBox.Show("Failed to update submission.")
+                    End If
+                Catch ex As Exception
+                    MessageBox.Show("An error occurred while updating submission: " & ex.Message)
+                End Try
+            End Using
         End If
-    End Sub
-
-    Private Sub btnStopWatchToggle_Click(sender As Object, e As EventArgs) Handles btnStopWatchToggle.Click
-        If Not stopwatchRunning Then
-            stopwatchRunning = True
-            If elapsedTime = TimeSpan.Zero Then
-                stopwatchStartTime = DateTime.Now
-            Else
-                stopwatchStartTime = DateTime.Now - elapsedTime
-            End If
-            stopwatchTimer.Start()
-        Else
-            stopwatchRunning = False
-            elapsedTime = DateTime.Now - stopwatchStartTime
-            stopwatchTimer.Stop()
-        End If
-    End Sub
-
-    Private Sub UpdateStopwatch(sender As Object, e As EventArgs)
-        If stopwatchRunning Then
-            Dim currentTime As TimeSpan = DateTime.Now - stopwatchStartTime
-            txtStopWatch.Text = String.Format("{0:00}:{1:00}:{2:00}", currentTime.Hours, currentTime.Minutes, currentTime.Seconds)
-        End If
-    End Sub
+    End Function
 End Class
+
 
 Public Class Submission
     Public Property name As String

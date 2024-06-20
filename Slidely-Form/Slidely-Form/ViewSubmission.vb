@@ -102,6 +102,28 @@ Public Class ViewSubmission
             MessageBox.Show("No submission selected for deletion.")
         End If
     End Sub
+
+    Private Sub btnEdit_Click(sender As Object, e As EventArgs) Handles btnEdit.Click
+        If submissions IsNot Nothing AndAlso submissions.Count > 0 Then
+            Dim submission As GetSubmission = submissions(currentIndex)
+            Dim editForm As New SubmissionForm(submission)
+            editForm.ShowDialog()
+            ' Optionally, refresh the submissions after editing
+            RefreshSubmissionsAsync()
+        Else
+            MessageBox.Show("No submission selected for editing.")
+        End If
+    End Sub
+
+    Private Async Function RefreshSubmissionsAsync() As Task
+        Try
+            submissions = Await FetchSubmissionsAsync()
+            DisplaySubmission()
+        Catch ex As Exception
+            MessageBox.Show("An error occurred while fetching submissions: " & ex.Message)
+        End Try
+    End Function
+
 End Class
 
 Public Class GetSubmission
