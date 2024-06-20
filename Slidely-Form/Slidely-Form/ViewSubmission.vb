@@ -4,6 +4,12 @@ Imports System.Threading.Tasks
 Imports Newtonsoft.Json
 
 Public Class ViewSubmission
+    Public Sub New()
+        InitializeComponent()
+        Me.KeyPreview = True
+        Me.Focus()
+    End Sub
+
     Private submissions As List(Of GetSubmission)
     Private baseURL As String = "http://localhost:3000"
     Private currentIndex As Integer = 0
@@ -62,6 +68,16 @@ Public Class ViewSubmission
             DisplaySubmission()
         Else
             MessageBox.Show("Already at the first submission.")
+        End If
+    End Sub
+
+    Private Sub ViewForm_KeyDown(sender As Object, e As KeyEventArgs) Handles MyBase.KeyDown
+        If e.Control AndAlso e.KeyCode = Keys.P Then
+            btnNext.PerformClick()
+            e.SuppressKeyPress = True
+        ElseIf e.Control AndAlso e.KeyCode = Keys.N Then
+            btnNext.PerformClick()
+            e.SuppressKeyPress = True
         End If
     End Sub
 

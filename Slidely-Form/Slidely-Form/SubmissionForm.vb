@@ -4,6 +4,11 @@ Imports System.Threading.Tasks
 Imports Newtonsoft.Json
 
 Public Class SubmissionForm
+    Public Sub New()
+        InitializeComponent()
+        Me.KeyPreview = True
+        Me.Focus()
+    End Sub
 
     Private Async Sub btnSubmit_Click(sender As Object, e As EventArgs) Handles btnSubmit.Click
         Await SubmitFormAsync()
@@ -47,13 +52,16 @@ Public Class SubmissionForm
 
     ' 
     Private Sub SubmissionForm_KeyDown(sender As Object, e As KeyEventArgs) Handles MyBase.KeyDown
-        If e.Control AndAlso e.KeyCode = Keys.S Then
+        If e.KeyCode = Keys.S Then
             btnSubmit.PerformClick()
             e.SuppressKeyPress = True
         End If
     End Sub
+End Class
 
-    Public Class Submission
+
+
+Public Class Submission
     Public Property name As String
     Public Property email As String
     Public Property phone As String
