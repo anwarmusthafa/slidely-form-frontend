@@ -8,18 +8,34 @@ Public Class SubmissionForm
     Private stopwatchStartTime As DateTime
     Private elapsedTime As TimeSpan
     Private stopwatchTimer As Timer
+    Private isEditMode As Boolean = False
+    Private submissionId As String
 
-    Public Sub New()
+    Public Sub New(Optional submission As GetSubmission = Nothing)
         InitializeComponent()
         Me.KeyPreview = True
         Me.Focus()
         stopwatchTimer = New Timer()
         AddHandler stopwatchTimer.Tick, AddressOf UpdateStopwatch
         stopwatchTimer.Interval = 1000
+
+        If submission IsNot Nothing Then
+            isEditMode = True
+            submissionId = submission.id
+            txtName.Text = submission.name
+            txtEmail.Text = submission.email
+            txtPhone.Text = submission.phone
+            txtGithubLink.Text = submission.github_link
+            txtStopWatch.Text = submission.stopwatch_time
+        End If
     End Sub
 
     Private Async Sub btnSubmit_Click(sender As Object, e As EventArgs) Handles btnSubmit.Click
-        Await SubmitFormAsync()
+        If isEditMode Then
+            Await EditSubmissionAsync()
+        Else
+            Await SubmitFormAsync()
+        End If
     End Sub
 
     Private Async Function SubmitFormAsync() As Task
@@ -49,6 +65,33 @@ Public Class SubmissionForm
         End Using
     End Function
 
+    Private Async Function EditSubmissionAsync() As Task
+        Dim submission As New Submission With {
+            .name = txtName.Text,
+            .email = txtEmail.Text,
+            .phone = txtPhone.Text,
+            .github_link = txtGithubLink.Text,
+            .stopwatch_time = txtStopWatch.Text
+        }
+
+        Using client As New HttpClient()
+            Try
+                Dim jsonContent As String = JsonConvert.SerializeObject(submission)
+                Dim content As StringContent = New StringContent(jsonContent, Encoding.UTF8, "application/json")
+                Dim response As HttpResponseMessage = Await client.PutAsync($"http://localhost:3000/update/{submissionId}", content)
+
+                If response.IsSuccessStatusCode Then
+                    MessageBox.Show("Submission Updated Successfully!")
+                    Me.Close()
+                Else
+                    MessageBox.Show("Failed to Update Submission!")
+                End If
+            Catch ex As Exception
+                MessageBox.Show("Error updating submission: " & ex.Message)
+            End Try
+        End Using
+    End Function
+
     Private Sub ClearFormFields()
         txtName.Text = ""
         txtEmail.Text = ""
@@ -71,7 +114,6 @@ Public Class SubmissionForm
             e.SuppressKeyPress = True
         ElseIf e.Control AndAlso e.KeyCode = Keys.T Then
             btnStopWatchToggle.PerformClick()
-
         End If
     End Sub
 

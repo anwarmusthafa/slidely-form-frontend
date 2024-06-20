@@ -102,6 +102,18 @@ Public Class ViewSubmission
             MessageBox.Show("No submission selected for deletion.")
         End If
     End Sub
+
+    Private Sub btnEdit_Click(sender As Object, e As EventArgs) Handles btnEdit.Click
+        If submissions IsNot Nothing AndAlso submissions.Count > 0 Then
+            Dim submission As GetSubmission = submissions(currentIndex)
+            Dim editForm As New SubmissionForm(submission)
+            editForm.ShowDialog()
+            ' Refresh the submissions list after editing
+            ViewSubmission_Load(sender, e)
+        Else
+            MessageBox.Show("No submission selected for editing.")
+        End If
+    End Sub
 End Class
 
 Public Class GetSubmission
