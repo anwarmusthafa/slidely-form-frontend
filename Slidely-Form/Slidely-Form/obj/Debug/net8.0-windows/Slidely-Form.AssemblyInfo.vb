@@ -16,7 +16,7 @@ Imports System.Reflection
 <Assembly: System.Reflection.AssemblyCompanyAttribute("Slidely-Form"),  _
  Assembly: System.Reflection.AssemblyConfigurationAttribute("Debug"),  _
  Assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0"),  _
- Assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+e9acc143723418d8e57467b03f6862ae75b578cb"),  _
+ Assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+0435b735e08f21f2e9e97894b9024ddefd07d9e1"),  _
  Assembly: System.Reflection.AssemblyProductAttribute("Slidely-Form"),  _
  Assembly: System.Reflection.AssemblyTitleAttribute("Slidely-Form"),  _
  Assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0"),  _
