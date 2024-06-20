@@ -18,3 +18,5 @@ E:\Slidely Intership\frontend\Slidely-Form\Slidely-Form\obj\Debug\net8.0-windows
 E:\Slidely Intership\frontend\Slidely-Form\Slidely-Form\bin\Debug\net8.0-windows\Newtonsoft.Json.dll
 E:\Slidely Intership\frontend\Slidely-Form\Slidely-Form\obj\Debug\net8.0-windows\Slidely-Form.vbproj.AssemblyReference.cache
 E:\Slidely Intership\frontend\Slidely-Form\Slidely-Form\obj\Debug\net8.0-windows\Slidely-.10075CD5.Up2Date
+E:\Slidely Intership\frontend\Slidely-Form\Slidely-Form\obj\Debug\net8.0-windows\Slidely_Form.ViewSubmission.resources
+E:\Slidely Intership\frontend\Slidely-Form\Slidely-Form\obj\Debug\net8.0-windows\Slidely-Form.sourcelink.json

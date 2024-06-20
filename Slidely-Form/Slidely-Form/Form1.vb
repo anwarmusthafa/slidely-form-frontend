@@ -1,5 +1,7 @@
 ﻿Public Class Form1
     Private Sub btnViewSubmission_Click(sender As Object, e As EventArgs) Handles btnViewSubmission.Click
+        Dim viewSubmissionsForm As New ViewSubmission()
+        viewSubmissionsForm.Show()
 
     End Sub
 
