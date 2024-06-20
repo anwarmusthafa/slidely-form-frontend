@@ -6,10 +6,11 @@ Imports Newtonsoft.Json
 Public Class ViewSubmission
     Private submissions As List(Of GetSubmission)
     Private baseURL As String = "http://localhost:3000"
+    Private currentIndex As Integer = 0 ' Track the current index of displayed submission
 
     Private Async Sub ViewSubmission_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         Try
-            ' Fetch submissions
+            ' Fetch submissions when the form loads
             submissions = Await FetchSubmissionsAsync()
             DisplaySubmission()
         Catch ex As Exception
@@ -21,7 +22,7 @@ Public Class ViewSubmission
         Using client As New HttpClient()
             Try
                 Dim response As HttpResponseMessage = Await client.GetAsync($"{baseURL}/read")
-                response.EnsureSuccessStatusCode() ' Ensure success
+                response.EnsureSuccessStatusCode()
                 Dim content As String = Await response.Content.ReadAsStringAsync()
                 Return JsonConvert.DeserializeObject(Of List(Of GetSubmission))(content)
             Catch ex As HttpRequestException
@@ -36,9 +37,7 @@ Public Class ViewSubmission
 
     Private Sub DisplaySubmission()
         If submissions IsNot Nothing AndAlso submissions.Count > 0 Then
-            ' For demonstration purposes, you may want to display all submissions or handle pagination/selection
-            ' Here, we'll assume displaying the first submission
-            Dim submission As GetSubmission = submissions(0) ' Adjust as per your application logic
+            Dim submission As GetSubmission = submissions(currentIndex)
             txtName.Text = submission.name
             txtEmail.Text = submission.email
             txtPhone.Text = submission.phone
@@ -46,6 +45,24 @@ Public Class ViewSubmission
             lblStopWatch.Text = submission.stopwatch_time
         Else
             MessageBox.Show("No submissions to display.")
+        End If
+    End Sub
+
+    Private Sub btnNext_Click(sender As Object, e As EventArgs) Handles btnNext.Click
+        If currentIndex < submissions.Count - 1 Then
+            currentIndex += 1
+            DisplaySubmission()
+        Else
+            MessageBox.Show("Already at the last submission.")
+        End If
+    End Sub
+
+    Private Sub btnPrev_Click(sender As Object, e As EventArgs) Handles btnPrev.Click
+        If currentIndex > 0 Then
+            currentIndex -= 1
+            DisplaySubmission()
+        Else
+            MessageBox.Show("Already at the first submission.")
         End If
     End Sub
 End Class
