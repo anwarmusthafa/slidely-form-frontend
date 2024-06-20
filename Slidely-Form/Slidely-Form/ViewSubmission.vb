@@ -6,11 +6,10 @@ Imports Newtonsoft.Json
 Public Class ViewSubmission
     Private submissions As List(Of GetSubmission)
     Private baseURL As String = "http://localhost:3000"
-    Private currentIndex As Integer = 0 ' Track the current index of displayed submission
+    Private currentIndex As Integer = 0
 
     Private Async Sub ViewSubmission_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         Try
-            ' Fetch submissions when the form loads
             submissions = Await FetchSubmissionsAsync()
             DisplaySubmission()
         Catch ex As Exception
@@ -42,7 +41,7 @@ Public Class ViewSubmission
             txtEmail.Text = submission.email
             txtPhone.Text = submission.phone
             txtGithubLink.Text = submission.github_link
-            lblStopWatch.Text = submission.stopwatch_time
+            txtStopWatch.Text = submission.stopwatch_time
         Else
             MessageBox.Show("No submissions to display.")
         End If
@@ -65,6 +64,8 @@ Public Class ViewSubmission
             MessageBox.Show("Already at the first submission.")
         End If
     End Sub
+
+
 End Class
 
 Public Class GetSubmission

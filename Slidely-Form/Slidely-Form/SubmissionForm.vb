@@ -6,6 +6,10 @@ Imports Newtonsoft.Json
 Public Class SubmissionForm
 
     Private Async Sub btnSubmit_Click(sender As Object, e As EventArgs) Handles btnSubmit.Click
+        Await SubmitFormAsync()
+    End Sub
+
+    Private Async Function SubmitFormAsync() As Task
         Dim submission As New Submission With {
             .name = txtName.Text,
             .email = txtEmail.Text,
@@ -14,10 +18,6 @@ Public Class SubmissionForm
             .stopwatch_time = txtStopWatch.Text
         }
 
-        Await SubmitFormAsync(submission)
-    End Sub
-
-    Private Async Function SubmitFormAsync(submission As Submission) As Task
         Using client As New HttpClient()
             Try
                 Dim jsonContent As String = JsonConvert.SerializeObject(submission)
@@ -26,7 +26,8 @@ Public Class SubmissionForm
 
                 If response.IsSuccessStatusCode Then
                     MessageBox.Show("Submission Successful!")
-
+                    ' Clear form fields or perform other actions upon successful submission
+                    ClearFormFields()
                 Else
                     MessageBox.Show("Submission Failed!")
                 End If
@@ -36,11 +37,23 @@ Public Class SubmissionForm
         End Using
     End Function
 
+    Private Sub ClearFormFields()
+        txtName.Text = ""
+        txtEmail.Text = ""
+        txtPhone.Text = ""
+        txtGithubLink.Text = ""
+        txtStopWatch.Text = ""
+    End Sub
 
+    ' 
+    Private Sub SubmissionForm_KeyDown(sender As Object, e As KeyEventArgs) Handles MyBase.KeyDown
+        If e.Control AndAlso e.KeyCode = Keys.S Then
+            btnSubmit.PerformClick()
+            e.SuppressKeyPress = True
+        End If
+    End Sub
 
-End Class
-
-Public Class Submission
+    Public Class Submission
     Public Property name As String
     Public Property email As String
     Public Property phone As String
