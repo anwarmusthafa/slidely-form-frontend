@@ -1,5 +1,4 @@
-﻿Imports System.ComponentModel.DataAnnotations
-Imports System.Net.Http
+﻿Imports System.Net.Http
 Imports System.Threading.Tasks
 Imports Newtonsoft.Json
 
@@ -81,10 +80,32 @@ Public Class ViewSubmission
         End If
     End Sub
 
-
+    Private Async Sub btnDelete_Click(sender As Object, e As EventArgs) Handles btnDelete.Click
+        If submissions IsNot Nothing AndAlso submissions.Count > 0 Then
+            Dim submission As GetSubmission = submissions(currentIndex)
+            Try
+                Using client As New HttpClient()
+                    Dim response As HttpResponseMessage = Await client.DeleteAsync($"{baseURL}/delete/{submission.id}")
+                    If response.IsSuccessStatusCode Then
+                        MessageBox.Show("Submission deleted successfully!")
+                        submissions.RemoveAt(currentIndex)
+                        If currentIndex > 0 Then currentIndex -= 1
+                        DisplaySubmission()
+                    Else
+                        MessageBox.Show("Failed to delete submission.")
+                    End If
+                End Using
+            Catch ex As Exception
+                MessageBox.Show("An error occurred while deleting the submission: " & ex.Message)
+            End Try
+        Else
+            MessageBox.Show("No submission selected for deletion.")
+        End If
+    End Sub
 End Class
 
 Public Class GetSubmission
+    Public Property id As String
     Public Property name As String
     Public Property email As String
     Public Property phone As String
