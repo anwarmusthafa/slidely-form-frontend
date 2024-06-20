@@ -34,7 +34,7 @@ Partial Class SubmissionForm
         lblGithubLink = New Label()
         ContextMenuStrip1 = New ContextMenuStrip(components)
         txtStopWatch = New TextBox()
-        btnStopWatch = New Button()
+        btnStopWatchToggle = New Button()
         btnSubmit = New Button()
         SuspendLayout()
         ' 
@@ -130,15 +130,15 @@ Partial Class SubmissionForm
         txtStopWatch.Size = New Size(143, 27)
         txtStopWatch.TabIndex = 12
         ' 
-        ' btnStopWatch
+        ' btnStopWatchToggle
         ' 
-        btnStopWatch.BackColor = Color.Khaki
-        btnStopWatch.Location = New Point(31, 306)
-        btnStopWatch.Name = "btnStopWatch"
-        btnStopWatch.Size = New Size(218, 32)
-        btnStopWatch.TabIndex = 10
-        btnStopWatch.Text = "Toggle Stop Watch (CTRL + T)"
-        btnStopWatch.UseVisualStyleBackColor = False
+        btnStopWatchToggle.BackColor = Color.Khaki
+        btnStopWatchToggle.Location = New Point(31, 306)
+        btnStopWatchToggle.Name = "btnStopWatchToggle"
+        btnStopWatchToggle.Size = New Size(218, 32)
+        btnStopWatchToggle.TabIndex = 10
+        btnStopWatchToggle.Text = "Toggle Stop Watch (CTRL + T)"
+        btnStopWatchToggle.UseVisualStyleBackColor = False
         ' 
         ' btnSubmit
         ' 
@@ -157,7 +157,7 @@ Partial Class SubmissionForm
         ClientSize = New Size(475, 450)
         Controls.Add(btnSubmit)
         Controls.Add(txtStopWatch)
-        Controls.Add(btnStopWatch)
+        Controls.Add(btnStopWatchToggle)
         Controls.Add(lblGithubLink)
         Controls.Add(lblPhone)
         Controls.Add(Label1)
@@ -184,6 +184,6 @@ Partial Class SubmissionForm
     Friend WithEvents lblGithubLink As Label
     Friend WithEvents ContextMenuStrip1 As ContextMenuStrip
     Friend WithEvents txtStopWatch As TextBox
-    Friend WithEvents btnStopWatch As Button
+    Friend WithEvents btnStopWatchToggle As Button
     Friend WithEvents btnSubmit As Button
 End Class

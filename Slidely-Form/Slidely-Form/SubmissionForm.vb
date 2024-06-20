@@ -4,10 +4,18 @@ Imports System.Threading.Tasks
 Imports Newtonsoft.Json
 
 Public Class SubmissionForm
+    Private stopwatchRunning As Boolean = False
+    Private stopwatchStartTime As DateTime
+    Private elapsedTime As TimeSpan
+    Private stopwatchTimer As Timer
+
     Public Sub New()
         InitializeComponent()
         Me.KeyPreview = True
         Me.Focus()
+        stopwatchTimer = New Timer()
+        AddHandler stopwatchTimer.Tick, AddressOf UpdateStopwatch
+        stopwatchTimer.Interval = 1000
     End Sub
 
     Private Async Sub btnSubmit_Click(sender As Object, e As EventArgs) Handles btnSubmit.Click
@@ -31,7 +39,6 @@ Public Class SubmissionForm
 
                 If response.IsSuccessStatusCode Then
                     MessageBox.Show("Submission Successful!")
-                    ' Clear form fields or perform other actions upon successful submission
                     ClearFormFields()
                 Else
                     MessageBox.Show("Submission Failed!")
@@ -47,19 +54,50 @@ Public Class SubmissionForm
         txtEmail.Text = ""
         txtPhone.Text = ""
         txtGithubLink.Text = ""
-        txtStopWatch.Text = ""
+        txtStopWatch.Text = "00:00:00"
+        ResetStopwatch()
     End Sub
 
-    ' 
+    Private Sub ResetStopwatch()
+        stopwatchRunning = False
+        elapsedTime = TimeSpan.Zero
+        stopwatchTimer.Stop()
+        txtStopWatch.Text = "00:00:00"
+    End Sub
+
     Private Sub SubmissionForm_KeyDown(sender As Object, e As KeyEventArgs) Handles MyBase.KeyDown
-        If e.KeyCode = Keys.S Then
+        If e.Control AndAlso e.KeyCode = Keys.S Then
             btnSubmit.PerformClick()
             e.SuppressKeyPress = True
+        ElseIf e.Control AndAlso e.KeyCode = Keys.T Then
+            btnStopWatchToggle.PerformClick()
+
+        End If
+    End Sub
+
+    Private Sub btnStopWatchToggle_Click(sender As Object, e As EventArgs) Handles btnStopWatchToggle.Click
+        If Not stopwatchRunning Then
+            stopwatchRunning = True
+            If elapsedTime = TimeSpan.Zero Then
+                stopwatchStartTime = DateTime.Now
+            Else
+                stopwatchStartTime = DateTime.Now - elapsedTime
+            End If
+            stopwatchTimer.Start()
+        Else
+            stopwatchRunning = False
+            elapsedTime = DateTime.Now - stopwatchStartTime
+            stopwatchTimer.Stop()
+        End If
+    End Sub
+
+    Private Sub UpdateStopwatch(sender As Object, e As EventArgs)
+        If stopwatchRunning Then
+            Dim currentTime As TimeSpan = DateTime.Now - stopwatchStartTime
+            txtStopWatch.Text = String.Format("{0:00}:{1:00}:{2:00}", currentTime.Hours, currentTime.Minutes, currentTime.Seconds)
         End If
     End Sub
 End Class
-
-
 
 Public Class Submission
     Public Property name As String

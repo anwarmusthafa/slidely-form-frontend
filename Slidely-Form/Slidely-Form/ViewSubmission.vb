@@ -73,7 +73,7 @@ Public Class ViewSubmission
 
     Private Sub ViewForm_KeyDown(sender As Object, e As KeyEventArgs) Handles MyBase.KeyDown
         If e.Control AndAlso e.KeyCode = Keys.P Then
-            btnNext.PerformClick()
+            btnPrev.PerformClick()
             e.SuppressKeyPress = True
         ElseIf e.Control AndAlso e.KeyCode = Keys.N Then
             btnNext.PerformClick()
