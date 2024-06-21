@@ -2,6 +2,10 @@
 
 This project is a Windows Desktop Application built with Visual Basic in Visual Studio. It provides a user interface for creating and viewing form submissions and communicates with a backend server built with Express.js and TypeScript.
 
+## Demo
+
+https://youtu.be/0JfdMbMtVBY
+
 ## Setup
 
 ### Prerequisites
@@ -61,7 +65,3 @@ This form allows you to create a new submission:
 Text Boxes: Input fields for name, email, phone number, and GitHub repo link.
 Stopwatch: A button to start/stop the stopwatch.
 Submit: A button to submit the form. Can also be triggered with Ctrl + S.
-
-## Demo
-
-https://youtu.be/0JfdMbMtVBY
