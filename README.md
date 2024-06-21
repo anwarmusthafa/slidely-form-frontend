@@ -10,7 +10,7 @@ This project is a Windows Desktop Application built with Visual Basic in Visual 
    - Download and install [Visual Studio](https://visualstudio.microsoft.com/) with the .NET Desktop Development workload.
 
 2. **Backend Server**
-   - Ensure the backend server is running and accessible at `http://localhost:3000`. Refer to the [Slidely Form Backend](https://github.com/anwarmusthafa/slidely-form-frontend.git) repository for setup instructions.
+   - Ensure the backend server is running and accessible at `http://localhost:3000`. Refer to the [Slidely Form Backend](https://github.com/anwarmusthafa/slidely-form-backend.git) repository for setup instructions.
 
 ### Installation
 
